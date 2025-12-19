@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>40° Aniversario - Janet y Pedro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --gold-color: #8b6f4e;
+        --text-color: #5a5a5a;
+        --anim-speed: 1.2s;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: "Lato", sans-serif;
+        overflow-x: hidden;
+        padding: 0;
+      }
+
+      /* --- Tarjeta de Invitación --- */
+      .card {
+        background-color: #fff;
+        width: 100%;
+        max-width: 600px; /* Ancho máximo para escritorio */
+        position: relative;
+        padding: 60px 30px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        color: var(--text-color);
+        overflow: hidden;
+        opacity: 0;
+        animation: cardEntrance 1s ease-out forwards;
+        border-radius: 8px;
+        /* Flex para asegurar centrado vertical si sobra espacio */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* ================= DECORACIÓN (SOLUCIÓN SALTOS) ================= */
+      /* El Wrapper maneja la POSICIÓN y la ENTRADA */
+      .decor-wrapper {
+        position: absolute;
+        z-index: 1;
+        opacity: 0; /* Empieza invisible */
+        pointer-events: none;
+        /* un estilo para que se puedan ver las letras*/
+      }
+
+      /* La imagen interna maneja la FLOTACIÓN constante */
+      .decor-wrapper img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      /* 1. Flores Superiores Izquierda */
+      .wrapper-top-left {
+        top: -20px;
+        left: -20px;
+        width: 250px;
+        animation: slideInTopLeft 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s
+          forwards;
+      }
+      .wrapper-top-left img {
+        animation: float 6s ease-in-out infinite 2s; /* Retraso de 2s para que empiece al llegar */
+      }
+
+      /* 2. Flores Inferiores Derecha */
+      .wrapper-bottom-right {
+        bottom: -20px;
+        right: -20px;
+        width: 280px;
+        animation: slideInBottomRight 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s
+          forwards;
+      }
+      .wrapper-bottom-right img {
+        animation: floatBottom 6s ease-in-out infinite 2s;
+      }
+
+      /* 3. Dibujos lineales (sin flotación compleja, solo aparecen) */
+      .drawing-top-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 180px;
+        opacity: 0;
+        z-index: 0;
+        animation: fadeInRotate 2s ease forwards 1s;
+      }
+
+      .drawing-bottom-left {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 200px;
+        opacity: 0;
+        z-index: 0;
+        animation: fadeInRotateReverse 2s ease forwards 1s;
+      }
+
+      /* ================= CONTENIDO ================= */
+      .content {
+        position: relative;
+        z-index: 10; /* Asegura que el texto esté sobre las flores */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+
+      .hosts {
+        font-family: "Cinzel", serif;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        color: var(--text-color);
+        opacity: 0;
+        animation: fadeInUp var(--anim-speed) ease forwards 0.8s;
+        padding: 0 20px;
+      }
+
+      .main-names {
+        font-family: "Great Vibes", cursive;
+        font-size: 5rem; /* Base size */
+        line-height: 1.1;
+        color: var(--gold-color);
+        margin: 10px 0;
+        opacity: 0;
+        transform: scale(1.2);
+        animation: zoomInFade var(--anim-speed) ease forwards 1s;
+      }
+
+      .ampersand {
+        font-size: 0.6em; /* Relativo al padre */
+        display: block;
+        margin: -5px 0;
+      }
+
+      .event-title {
+        font-family: "Cinzel", serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-top: 20px;
+        color: var(--gold-color);
+        opacity: 0;
+        animation: fadeInUp var(--anim-speed) ease forwards 1.3s;
+      }
+
+      .month {
+        font-family: "Cinzel", serif;
+        font-size: 0.9rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        opacity: 0;
+        animation: fadeInUp var(--anim-speed) ease forwards 1.5s;
+      }
+
+      /* Bloque de Fecha */
+      .date-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 15px 0;
+        width: 100%;
+        color: var(--gold-color);
+        opacity: 0;
+        animation: expandWidth var(--anim-speed) ease forwards 1.7s;
+      }
+
+      .date-line {
+        height: 1px;
+        background-color: var(--gold-color);
+        flex-grow: 1;
+        max-width: 80px;
+      }
+
+      .date-content {
+        padding: 0 10px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .date-day-text,
+      .date-time {
+        font-family: "Cinzel", serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        white-space: nowrap; /* Evita que "A LA 1:00 PM" se parta feo */
+      }
+
+      .date-number {
+        font-family: "Cinzel", serif;
+        font-size: 4rem;
+        line-height: 1;
+        font-weight: 600;
+        color: var(--gold-color);
+      }
+
+      .date-year {
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        letter-spacing: 4px;
+        font-weight: 600;
+        opacity: 0;
+        animation: fadeInUp var(--anim-speed) ease forwards 1.9s;
+      }
+
+      .details-container {
+        position: relative;
+        padding: 20px;
+        border-radius: 20px;
+        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+      }
+
+      .details-blur {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;;
+      }
+
+      /* Detalles */
+      .details-section {
+        margin-top: 30px;
+        opacity: 0;
+        animation: fadeInUp var(--anim-speed) ease forwards 2.1s;
+      }
+
+      .details-title {
+        font-family: "Cinzel", serif;
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+        color: var(--gold-color);
+      }
+
+      .details-text {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        color: var(--text-color);
+      }
+
+      .dress-code {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-style: italic;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        opacity: 0;
+        animation: fadeInUp var(--anim-speed) ease forwards 2.3s;
+      }
+
+      .special-note {
+        font-style: italic;
+        font-size: 0.85rem;
+        max-width: 90%;
+        margin: 0 auto;
+        color: var(--text-color);
+        opacity: 0;
+        animation: fadeInUp var(--anim-speed) ease forwards 2.5s;
+      }
+
+      /* ================= KEYFRAMES ================= */
+      @keyframes cardEntrance {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes zoomInFade {
+        from {
+          opacity: 0;
+          transform: scale(1.1);
+          filter: blur(5px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+          filter: blur(0);
+        }
+      }
+      @keyframes expandWidth {
+        from {
+          opacity: 0;
+          transform: scaleX(0.5);
+        }
+        to {
+          opacity: 1;
+          transform: scaleX(1);
+        }
+      }
+
+      /* Entradas de Flores */
+      @keyframes slideInTopLeft {
+        from {
+          opacity: 0;
+          transform: translate(-50px, -50px);
+        }
+        to {
+          opacity: 1;
+          transform: translate(0, 0);
+        }
+      }
+      @keyframes slideInBottomRight {
+        from {
+          opacity: 0;
+          transform: translate(50px, 50px);
+        }
+        to {
+          opacity: 1;
+          transform: translate(0, 0);
+        }
+      }
+
+      /* Dibujos */
+      @keyframes fadeInRotate {
+        from {
+          opacity: 0;
+          transform: rotate(-10deg) scale(0.9);
+        }
+        to {
+          opacity: 0.6;
+          transform: rotate(0deg) scale(1);
+        }
+      }
+      @keyframes fadeInRotateReverse {
+        from {
+          opacity: 0;
+          transform: rotate(10deg) scale(0.9);
+        }
+        to {
+          opacity: 0.6;
+          transform: rotate(0deg) scale(1);
+        }
+      }
+
+      /* Flotación Suave (Canva Style) */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(5px, 5px);
+        }
+      }
+      @keyframes floatBottom {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(-5px, -5px);
+        }
+      }
+
+      /* ================= RESPONSIVE (MÓVIL) ================= */
+      @media screen and (max-width: 480px) {
+        .card {
+          padding: 40px 15px; /* Menos padding lateral */
+          min-height: auto; /* Dejar que crezca según contenido */
+        }
+
+        /* Achicar fuente de los nombres para que no se rompan */
+        .main-names {
+          font-size: 3.5rem;
+          margin: 5px 0;
+        }
+
+        /* Achicar flores y empujarlas más a la esquina */
+        .wrapper-top-left {
+          width: 160px; /* Mucho más pequeñas */
+          top: -10px;
+          left: -10px;
+        }
+
+        .wrapper-bottom-right {
+          width: 180px;
+          bottom: -10px;
+          right: -10px;
+        }
+
+        .drawing-top-right,
+        .drawing-bottom-left {
+          width: 120px; /* Dibujos dorados más sutiles */
+          opacity: 0.4; /* Más transparentes para leer mejor */
+        }
+
+        /* Ajustar bloque de fecha para pantallas muy angostas */
+        .date-number {
+          font-size: 3rem;
+        }
+        .date-day-text,
+        .date-time {
+          font-size: 0.8rem;
+        }
+
+        /* Texto general un poco más compacto */
+        .event-title {
+          font-size: 1rem;
+          margin-top: 15px;
+        }
+        .details-text {
+          font-size: 0.9rem;
+          margin-bottom: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <div class="decor-wrapper wrapper-top-left">
+        <img src="./images/top-left.png" alt="Flores Superiores" />
+      </div>
+
+      <div class="decor-wrapper wrapper-bottom-right">
+        <img src="./images/bottom-right.png" alt="Flores Inferiores" />
+      </div>
+
+      <img
+        src="./images/top-right.png"
+        alt="Dibujo Superior"
+        class="drawing-top-right"
+      />
+      <img
+        src="./images/bottom-left.png"
+        alt="Dibujo Inferior"
+        class="drawing-bottom-left"
+      />
+
+      <div class="content">
+        <div class="hosts">
+          Leslie, Jeffrey y Alexandra<br />
+          tienen el honor de invitarlos a celebrar
+        </div>
+
+        <h1 class="main-names">Janet <span class="ampersand">y</span> Pedro</h1>
+
+        <div class="event-title">40° Aniversario de Bodas</div>
+        <div class="month">Diciembre</div>
+
+        <div class="date-block">
+          <div class="date-line"></div>
+          <div class="date-content">
+            <span class="date-day-text">SÁBADO</span>
+            <span class="date-number">27</span>
+            <span class="date-time">A LA 1:00 PM</span>
+          </div>
+          <div class="date-line"></div>
+        </div>
+        <div class="date-year">2025</div>
+
+        <div class="details-container">
+            <div class="details-blur"></div>
+          <div class="details-section">
+            <div class="details-title">CEREMONIA</div>
+            <div class="details-text">
+              Catedral Castrense Sella Maris,<br />
+              Av. Venezuela 3, Bellavista<br />
+              (Dentro del Hospital Naval)
+            </div>
+
+            <div class="details-title">RECEPCIÓN</div>
+            <div class="details-text">Jirón San Amadeo 1274 - SMP</div>
+          </div>
+
+          <div class="dress-code">
+            <img
+              src="./images/vestimenta-icon.png"
+              alt="Ícono de Vestimenta"
+              width="24"
+              height="24"
+            />
+            Casual
+          </div>
+
+          <p class="special-note">
+            Nota especial: ¡Acompáñanos también a celebrar los 67 años de Pedro!
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
