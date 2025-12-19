@@ -462,6 +462,25 @@
             }
         }
 
+        /* Pétalos en explosión */
+        @keyframes petalBurst {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .petal {
+            position: fixed;
+            font-size: 1.5rem;
+            pointer-events: none;
+            animation: petalBurst 1.2s ease-out forwards;
+        }
+
         /* ================= RESPONSIVE (MÓVIL) ================= */
         @media screen and (max-width: 480px) {
             body {
@@ -605,6 +624,85 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Array de símbolos decorativos que combinan con la paleta de colores
+        const petals = ['✿', '✾', '◆', '✦', '⟡', '✧', '✤'];
+
+        // Función para crear pétalos en explosión
+        document.addEventListener('click', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            // Crear 8-12 pétalos
+            const petalCount = Math.random() * 5 + 8;
+
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+                petal.style.color = '#8b6f4e'; // Color dorado de la página
+
+                // Ángulo aleatorio para cada pétalo (360 grados)
+                const angle = (360 / petalCount) * i;
+                const distance = 80 + Math.random() * 120; // Distancia de viaje
+
+                // Convertir ángulo a coordenadas
+                const radians = (angle * Math.PI) / 180;
+                const tx = Math.cos(radians) * distance;
+                const ty = Math.sin(radians) * distance;
+
+                // Aplicar variables CSS
+                petal.style.setProperty('--tx', tx + 'px');
+                petal.style.setProperty('--ty', ty + 'px');
+
+                // Posicionar en el punto del click
+                petal.style.left = x + 'px';
+                petal.style.top = y + 'px';
+
+                document.body.appendChild(petal);
+
+                // Remover el pétalo después de la animación
+                setTimeout(() => {
+                    petal.remove();
+                }, 1200);
+            }
+        });
+
+        // También detectar taps en móvil
+        document.addEventListener('touchend', (e) => {
+            const x = e.changedTouches[0].clientX;
+            const y = e.changedTouches[0].clientY;
+
+            const petalCount = Math.random() * 5 + 8;
+
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+                petal.style.color = '#8b6f4e'; // Color dorado de la página
+
+                const angle = (360 / petalCount) * i;
+                const distance = 80 + Math.random() * 120;
+
+                const radians = (angle * Math.PI) / 180;
+                const tx = Math.cos(radians) * distance;
+                const ty = Math.sin(radians) * distance;
+
+                petal.style.setProperty('--tx', tx + 'px');
+                petal.style.setProperty('--ty', ty + 'px');
+
+                petal.style.left = x + 'px';
+                petal.style.top = y + 'px';
+
+                document.body.appendChild(petal);
+
+                setTimeout(() => {
+                    petal.remove();
+                }, 1200);
+            }
+        });
+    </script>
 </body>
 
 </html>
