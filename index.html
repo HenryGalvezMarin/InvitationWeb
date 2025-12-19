@@ -493,6 +493,18 @@
             }
         }
 
+        /* Pétalos en rastro */
+        @keyframes petalTrail {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
         .petal {
             position: fixed;
             font-size: 1.5rem;
@@ -651,26 +663,38 @@
     </div>
 
     <script>
-        // Array de símbolos decorativos que combinan con la paleta de colores
+        // Símbolos decorativos
         const petals = ['✿', '✾', '◆', '✦', '⟡', '✧', '✤'];
 
-        // Función para crear pétalos en explosión
+        // Colores que combinan con la paleta de la página
+        const petalColors = ['#8b6f4e', '#BABB3E', '#D5B52F', '#759134', '#DED8C1'];
+
+        let lastTrailTime = 0;
+        const trailDelay = 50; // Milisegundos entre cada pétalo del rastro
+
+        // Función para obtener un color aleatorio
+        function getRandomColor() {
+            return petalColors[Math.floor(Math.random() * petalColors.length)];
+        }
+
+        // Función para crear pétalos en explosión (click/tap)
         document.addEventListener('click', (e) => {
             const x = e.clientX;
             const y = e.clientY;
 
-            // Crear 8-12 pétalos
-            const petalCount = Math.random() * 5 + 8;
+            // Crear 10-15 pétalos
+            const petalCount = Math.random() * 5 + 10;
 
             for (let i = 0; i < petalCount; i++) {
                 const petal = document.createElement('div');
                 petal.classList.add('petal');
                 petal.textContent = petals[Math.floor(Math.random() * petals.length)];
-                petal.style.color = '#8b6f4e'; // Color dorado de la página
+                petal.style.fontSize = (1.2 + Math.random() * 0.8) + 'rem';
+                petal.style.color = getRandomColor();
 
                 // Ángulo aleatorio para cada pétalo (360 grados)
                 const angle = (360 / petalCount) * i;
-                const distance = 80 + Math.random() * 120; // Distancia de viaje
+                const distance = 80 + Math.random() * 120;
 
                 // Convertir ángulo a coordenadas
                 const radians = (angle * Math.PI) / 180;
@@ -694,18 +718,92 @@
             }
         });
 
-        // También detectar taps en móvil
+        // Función para crear rastro al pasar el dedo/mouse
+        document.addEventListener('mousemove', (e) => {
+            const now = Date.now();
+            if (now - lastTrailTime < trailDelay) return;
+            lastTrailTime = now;
+
+            const x = e.clientX;
+            const y = e.clientY;
+
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+            petal.style.fontSize = (0.6 + Math.random() * 0.3) + 'rem';
+            petal.style.animation = 'petalTrail 0.8s ease-out forwards';
+            petal.style.color = getRandomColor();
+
+            // Dirección aleatoria sutil para el rastro
+            const angle = Math.random() * 360;
+            const distance = 40 + Math.random() * 60;
+
+            const radians = (angle * Math.PI) / 180;
+            const tx = Math.cos(radians) * distance;
+            const ty = Math.sin(radians) * distance;
+
+            petal.style.setProperty('--tx', tx + 'px');
+            petal.style.setProperty('--ty', ty + 'px');
+
+            petal.style.left = x + 'px';
+            petal.style.top = y + 'px';
+
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 800);
+        });
+
+        // También detectar taps en móvil con rastro
+        document.addEventListener('touchmove', (e) => {
+            const now = Date.now();
+            if (now - lastTrailTime < trailDelay) return;
+            lastTrailTime = now;
+
+            const x = e.touches[0].clientX;
+            const y = e.touches[0].clientY;
+
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+            petal.style.fontSize = (0.6 + Math.random() * 0.3) + 'rem';
+            petal.style.animation = 'petalTrail 0.8s ease-out forwards';
+            petal.style.color = getRandomColor();
+
+            const angle = Math.random() * 360;
+            const distance = 40 + Math.random() * 60;
+
+            const radians = (angle * Math.PI) / 180;
+            const tx = Math.cos(radians) * distance;
+            const ty = Math.sin(radians) * distance;
+
+            petal.style.setProperty('--tx', tx + 'px');
+            petal.style.setProperty('--ty', ty + 'px');
+
+            petal.style.left = x + 'px';
+            petal.style.top = y + 'px';
+
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 800);
+        });
+
+        // Explosión al hacer tap en móvil
         document.addEventListener('touchend', (e) => {
             const x = e.changedTouches[0].clientX;
             const y = e.changedTouches[0].clientY;
 
-            const petalCount = Math.random() * 5 + 8;
+            const petalCount = Math.random() * 5 + 10;
 
             for (let i = 0; i < petalCount; i++) {
                 const petal = document.createElement('div');
                 petal.classList.add('petal');
                 petal.textContent = petals[Math.floor(Math.random() * petals.length)];
-                petal.style.color = '#8b6f4e'; // Color dorado de la página
+                petal.style.fontSize = (1.2 + Math.random() * 0.8) + 'rem';
+                petal.style.color = getRandomColor();
 
                 const angle = (360 / petalCount) * i;
                 const distance = 80 + Math.random() * 120;
