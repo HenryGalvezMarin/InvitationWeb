@@ -25,32 +25,37 @@
       }
 
       body {
-        background-color: #f0f0f0;
+        background-color: #f5f3ef;
         display: flex;
+        justify-content: center;
+        align-items: center;
         min-height: 100vh;
         font-family: "Lato", sans-serif;
         overflow-x: hidden;
-        padding: 0;
+        padding: 20px;
       }
 
       /* --- Tarjeta de Invitación --- */
       .card {
-        background-color: #fff;
+        background-color: #faf8f5;
         width: 100%;
-        max-width: 600px; /* Ancho máximo para escritorio */
+        max-width: 500px; /* Ancho máximo para escritorio */
+        min-height: 100vh;
         position: relative;
-        padding: 60px 30px;
+        padding: 80px 40px;
         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         text-align: center;
         color: var(--text-color);
         overflow: hidden;
         opacity: 0;
         animation: cardEntrance 1s ease-out forwards;
-        border-radius: 8px;
+        border-radius: 0;
         /* Flex para asegurar centrado vertical si sobra espacio */
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
+        margin: 0 auto;
       }
 
       /* ================= DECORACIÓN (SOLUCIÓN SALTOS) ================= */
@@ -127,42 +132,42 @@
 
       .hosts {
         font-family: "Cinzel", serif;
-        font-size: 0.8rem;
-        letter-spacing: 1px;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
         text-transform: uppercase;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         color: var(--text-color);
         opacity: 0;
         animation: fadeInUp var(--anim-speed) ease forwards 0.8s;
         padding: 0 20px;
+        line-height: 1.8;
       }
 
       .main-names {
         font-family: "Great Vibes", cursive;
-        font-size: 5rem; /* Base size */
-        line-height: 1.1;
+        font-size: 4.5rem; /* Base size */
+        line-height: 0.9;
         color: var(--gold-color);
-        margin: 10px 0;
+        margin: 20px 0;
         opacity: 0;
         transform: scale(1.2);
         animation: zoomInFade var(--anim-speed) ease forwards 1s;
       }
 
       .ampersand {
-        font-size: 0.6em; /* Relativo al padre */
+        font-size: 0.5em; /* Relativo al padre */
         display: block;
-        margin: -5px 0;
-        margin-top: -25px;
-        padding: 15px 0;
+        margin: 0;
+        padding: 5px 0;
       }
 
       .event-title {
         font-family: "Cinzel", serif;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
-        letter-spacing: 2px;
+        letter-spacing: 3px;
         text-transform: uppercase;
-        margin-top: 20px;
+        margin-top: 25px;
         color: var(--gold-color);
         opacity: 0;
         animation: fadeInUp var(--anim-speed) ease forwards 1.3s;
@@ -170,10 +175,11 @@
 
       .month {
         font-family: "Cinzel", serif;
-        font-size: 0.9rem;
-        letter-spacing: 3px;
+        font-size: 0.85rem;
+        letter-spacing: 4px;
         text-transform: uppercase;
-        margin-bottom: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
         opacity: 0;
         animation: fadeInUp var(--anim-speed) ease forwards 1.5s;
       }
@@ -183,7 +189,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 15px 0;
+        margin: 10px 0;
         width: 100%;
         color: var(--gold-color);
         opacity: 0;
@@ -194,29 +200,32 @@
         height: 1px;
         background-color: var(--gold-color);
         flex-grow: 1;
-        max-width: 80px;
+        max-width: 60px;
       }
 
       .date-content {
-        padding: 0 10px;
+        padding: 0 15px;
         text-align: center;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 15px;
+        border-left: 1px solid var(--gold-color);
+        border-right: 1px solid var(--gold-color);
+        padding: 5px 20px;
       }
 
       .date-day-text,
       .date-time {
         font-family: "Cinzel", serif;
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 0.75rem;
         letter-spacing: 1px;
         white-space: nowrap; /* Evita que "A LA 1:00 PM" se parta feo */
       }
 
       .date-number {
         font-family: "Cinzel", serif;
-        font-size: 4rem;
+        font-size: 3.5rem;
         line-height: 1;
         font-weight: 600;
         color: var(--gold-color);
@@ -224,18 +233,21 @@
 
       .date-year {
         font-family: "Cinzel", serif;
-        font-size: 1rem;
-        letter-spacing: 4px;
+        font-size: 0.9rem;
+        letter-spacing: 5px;
         font-weight: 600;
+        margin-top: 5px;
         opacity: 0;
         animation: fadeInUp var(--anim-speed) ease forwards 1.9s;
       }
 
       .details-container {
         position: relative;
-        padding: 20px;
-        border-radius: 20px;
-        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+        padding: 25px 30px;
+        margin-top: 25px;
+        border-radius: 15px;
+        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.08));
+        max-width: 320px;
       }
 
       .details-blur {
@@ -244,14 +256,14 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(255, 255, 255, 0.6);
+        background-color: rgba(255, 255, 255, 0.75);
         backdrop-filter: blur(10px);
-        border-radius: 15px;;
+        border-radius: 15px;
+        z-index: -1;
       }
 
       /* Detalles */
       .details-section {
-        margin-top: 30px;
         opacity: 0;
         animation: fadeInUp var(--anim-speed) ease forwards 2.1s;
       }
@@ -259,15 +271,15 @@
       .details-title {
         font-family: "Cinzel", serif;
         font-weight: 600;
-        font-size: 1rem;
-        letter-spacing: 1px;
-        margin-bottom: 5px;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        margin-bottom: 8px;
         color: var(--gold-color);
       }
 
       .details-text {
-        font-size: 0.95rem;
-        line-height: 1.5;
+        font-size: 0.9rem;
+        line-height: 1.6;
         margin-bottom: 20px;
         color: var(--text-color);
       }
@@ -279,7 +291,7 @@
         gap: 8px;
         font-style: italic;
         font-size: 0.9rem;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         opacity: 0;
         animation: fadeInUp var(--anim-speed) ease forwards 2.3s;
       }
@@ -287,9 +299,10 @@
       .special-note {
         font-style: italic;
         font-size: 0.85rem;
-        max-width: 90%;
+        max-width: 100%;
         margin: 0 auto;
-        color: var(--text-color);
+        color: var(--gold-color);
+        line-height: 1.5;
         opacity: 0;
         animation: fadeInUp var(--anim-speed) ease forwards 2.5s;
       }
@@ -404,53 +417,76 @@
 
       /* ================= RESPONSIVE (MÓVIL) ================= */
       @media screen and (max-width: 480px) {
+        body {
+          padding: 0;
+        }
+
         .card {
-          padding: 40px 15px; /* Menos padding lateral */
-          min-height: auto; /* Dejar que crezca según contenido */
+          padding: 60px 25px; /* Menos padding lateral */
+          min-height: 100vh;
+          border-radius: 0;
         }
 
         /* Achicar fuente de los nombres para que no se rompan */
         .main-names {
-          font-size: 3.5rem;
-          margin: 5px 0;
+          font-size: 3.2rem;
+          margin: 15px 0;
         }
 
         /* Achicar flores y empujarlas más a la esquina */
         .wrapper-top-left {
-          width: 160px; /* Mucho más pequeñas */
-          top: -10px;
-          left: -10px;
+          width: 140px; /* Mucho más pequeñas */
+          top: -5px;
+          left: -5px;
         }
 
         .wrapper-bottom-right {
-          width: 180px;
-          bottom: -10px;
-          right: -10px;
+          width: 160px;
+          bottom: -5px;
+          right: -5px;
         }
 
-        .drawing-top-right,
+        .drawing-top-right {
+          width: 130px;
+          opacity: 0.5;
+        }
+        
         .drawing-bottom-left {
-          width: 120px; /* Dibujos dorados más sutiles */
-          opacity: 0.4; /* Más transparentes para leer mejor */
+          width: 140px;
+          opacity: 0.5;
         }
 
         /* Ajustar bloque de fecha para pantallas muy angostas */
         .date-number {
-          font-size: 3rem;
+          font-size: 2.8rem;
         }
         .date-day-text,
         .date-time {
-          font-size: 0.8rem;
+          font-size: 0.7rem;
+        }
+
+        .date-content {
+          gap: 10px;
+          padding: 5px 15px;
         }
 
         /* Texto general un poco más compacto */
         .event-title {
-          font-size: 1rem;
-          margin-top: 15px;
+          font-size: 0.9rem;
+          margin-top: 20px;
         }
         .details-text {
-          font-size: 0.9rem;
+          font-size: 0.85rem;
           margin-bottom: 15px;
+        }
+
+        .details-container {
+          padding: 20px 25px;
+          max-width: 100%;
+        }
+
+        .hosts {
+          font-size: 0.65rem;
         }
       }
     </style>
@@ -479,8 +515,9 @@
 
       <div class="content">
         <div class="hosts">
-          Leslie, Jeffrev y Alexandra<br />
-          tienen el honor de invitarlos a celebrar
+          Leslie, Jeffrey y Alexandra<br />
+          tienen el honor de invitarlos<br />
+          a celebrar
         </div>
 
         <h1 class="main-names">Janet <span class="ampersand">y</span> Pedro</h1>
