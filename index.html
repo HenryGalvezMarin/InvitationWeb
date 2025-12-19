@@ -336,6 +336,25 @@
             animation: fadeInUp var(--anim-speed) ease forwards 2.5s;
         }
 
+        /* Estilos para los links de Google Maps */
+        .map-link {
+            color: var(--text-color);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(139, 111, 78, 0.4);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .map-link:hover {
+            opacity: 0.7;
+            border-bottom-color: rgba(139, 111, 78, 0.2);
+        }
+
+        .map-link:active {
+            transform: scale(0.98);
+        }
+
         /* ================= KEYFRAMES ================= */
         @keyframes cardEntrance {
             from {
@@ -577,7 +596,7 @@
 
         <div class="content">
             <div class="hosts">
-                Leslie, Jeffrey y Alexandra<br />
+                Leslie, Jeffrev y Alexandra<br />
                 tienen el honor de invitarlos<br />
                 a celebrar
             </div>
@@ -603,13 +622,19 @@
                 <div class="details-section">
                     <div class="details-title">CEREMONIA</div>
                     <div class="details-text">
-                        Catedral Castrense Sella Maris,<br />
-                        Av. Venezuela 3, Bellavista<br />
-                        (Dentro del Hospital Naval)
+                        <a href="https://maps.app.goo.gl/tttwS7fu8RcbqU6J8" target="_blank" class="map-link">
+                            Catedral Castrense Sella Maris,<br />
+                            Av. Venezuela 3, Bellavista<br />
+                            (Dentro del Hospital Naval)
+                        </a>
                     </div>
 
                     <div class="details-title">RECEPCIÓN</div>
-                    <div class="details-text">Jirón San Amadeo 1274 - SMP</div>
+                    <div class="details-text">
+                        <a href="https://maps.app.goo.gl/yrQ7vfrHUjE1Nunv9" target="_blank" class="map-link">
+                            Jirón San Amadeo 1274 - SMP
+                        </a>
+                    </div>
                 </div>
 
                 <div class="dress-code">
